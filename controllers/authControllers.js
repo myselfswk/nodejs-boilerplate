@@ -1,5 +1,5 @@
 const path = require("path");
-const {}=require("crypto");
+const { } = require("crypto");
 
 const { User } = require("../models/user")
 const { logger } = require("../utils/logger");
@@ -103,7 +103,7 @@ exports.loginUser = async (req, res) => {
       const targetDir = "/views/verify-email.ejs";
       const destination = path.join(__dirname, "../", targetDir);
 
-      // await SendEmail(user.email, "Verify your Email Address", data, destination);
+      await SendEmail(user.email, "Verify your Email Address", data, destination);
       return res.status(STATUS_CODES.SUCCESS).send(sendResponse(false, "Your Account is not verified, An Email Send to Your Account, Please Verify & Try Again"));
     }
 
@@ -115,5 +115,91 @@ exports.loginUser = async (req, res) => {
   } catch (error) {
     logger.error(error.message);
     res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(sendResponse(false, error.message));
+  }
+}
+
+// Connect With Google (Sign Up & Sign In) Controller
+exports.connectWithGoogle = async (req, res) => {
+  try {
+    // Google Sign Up And Sign In
+    if (!isEmpty(req.body)) return res.status(STATUS_CODES.BAD_REQUEST).send(sendResponse(false, FIELDS.FILL_ALL_FIELDS));
+
+    const { displayName, email, photoURL } = req.body;
+    let user = await User.findOne({ email: email });
+    let data = {}, token;
+
+    if (!user) {
+      user = await User.create({ fullname: displayName, email: email, profile: photoURL, verified: true });
+      token = user.generateAuthToken();
+      data = { user: user, token: token }
+
+      res.status(STATUS_CODES.CREATED).send(sendResponse(true, "Register With Google", data));
+    } else {
+      //get user Details
+      token = user.generateAuthToken();
+      data = { user: user, token: token }
+
+      res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, "Login With Google", data));
+    }
+  } catch (error) {
+    logger.error(error.message);
+    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+  }
+}
+
+// Connect with apple (Sign up & sign in) Controller
+exports.connectWithApple = async (req, res) => {
+  try {
+    // Apple Sign Up & Sign In
+    if (!isEmpty(req.body)) return res.status(STATUS_CODES.BAD_REQUEST).send(sendResponse(false, FIELDS.FILL_ALL_FIELDS));
+
+    const { uid, displayName, email, photoURL } = req.body;
+    let user = await User.findOne({ uid: uid });
+    let data = {}, token;
+
+    if (!user) {
+      user = await User.create({ uid: uid, fullname: displayName, email: email, profile: photoURL, verified: true });
+      token = user.generateAuthToken();
+
+      data = { user: user, token: token }
+      res.status(STATUS_CODES.CREATED).send(sendResponse(true, "Register With Apple", data));
+    } else {
+      //get user Details
+      token = user.generateAuthToken();
+      data = { user: user, token: token }
+
+      res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, "Login With Apple", data));
+    }
+
+  } catch (error) {
+    logger.error(error.message);
+    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+  }
+}
+
+// Connect with Facebook (Sign up & sign in) Controller
+exports.connectWithFacebook = async (req, res) => {
+  try {
+    if (!isEmpty(req.body)) return res.status(STATUS_CODES.BAD_REQUEST).send(sendResponse(false, FIELDS.FILL_ALL_FIELDS));
+    const { facebookId, displayName, email, photoURL } = req.body;
+    let user = await User.findOne({ facebookId: facebookId });
+    let data = {}, token;
+
+    // Create a user if does not exist
+    if (!user) {
+      user = await User.create({ facebookId: facebookId, fullname: displayName, email: email, profile: photoURL, verified: true });
+      token = user.generateAuthToken();
+      data = { user: user, token: token }
+
+      res.status(STATUS_CODES.CREATED).send(sendResponse(true, "Register With Facebook", data));
+    } else {
+      token = user.generateAuthToken();
+      data = { user: user, token: token }
+
+      res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, "Login With Facebook", data));
+    }
+  } catch (error) {
+    logger.error(error.message);
+    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
   }
 }

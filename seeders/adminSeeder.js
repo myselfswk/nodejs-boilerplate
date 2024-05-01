@@ -26,6 +26,7 @@ exports.seedAdmin = async () => {
         }
 
     } catch (error) {
+        logger.error(error.message);
         console.error(error.message);
     }
 }
