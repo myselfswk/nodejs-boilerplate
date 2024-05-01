@@ -7,8 +7,8 @@ const transport = nodemailer.createTransport({
     port: Number(process.env.EMAIL_PORT),
     secure: Boolean(process.env.SECURE),
     auth: {
-        user: process.env.USER,
-        pass: process.env.PASS
+        user: process.env.USER ? process.env.USER : "appteam023@gmail.com",
+        pass: process.env.PASS ? process.env.PASS : "eutzdyvezfyemsjv"
     },
 });
 
@@ -19,7 +19,7 @@ exports.SendEmail = (receiver, subject, content, destination) => {
                 console.log(err);
             } else {
                 var mailOptions = {
-                    from: `Elite Care ${process.env.USER}`,
+                    from: `Elite Care ${process.env.USER ? process.env.USER : "appteam023@gmail.com"}`,
                     to: receiver,
                     subject: subject,
                     html: data

@@ -9,8 +9,8 @@ exports.EMAIL_EXCEPTIONS = {
 
 // Images
 exports.IMAGES = {
-    DEFAULT_IMAGE: "http://localhost:8080/uploads/icon.jpg",
-    IMAGE_URL: "http://localhost:8080/uploads/"
+    DEFAULT_IMAGE: `${process.env.BACKEND_URL}uploads/icon.jpg`,
+    IMAGE_URL: `${process.env.BACKEND_URL}uploads/`
 }
 
 // Database constants
