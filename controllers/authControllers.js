@@ -2,10 +2,10 @@ const path = require("path");
 const { } = require("crypto");
 
 const { User } = require("../models/user")
-const { logger } = require("../utils/logger");
 const { sendResponse } = require("../utils/sendResponse");
 const { STATUS_CODES, FIELDS, EMAIL_EXCEPTIONS } = require("../utils/constants");
 const { isEmpty } = require("../utils/isEmpty");
+const { errorHandling } = require("../utils/errorHandling");
 const { SendEmail } = require("../services/sendEmail");
 
 // Register User Controller
@@ -50,8 +50,7 @@ exports.registerUser = async (req, res) => {
     res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, EMAIL_EXCEPTIONS.VERIFY_EMAIL));
 
   } catch (error) {
-    logger.error(error.message);
-    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+    errorHandling(error, res);
   }
 }
 // Email Verify Controller
@@ -75,8 +74,7 @@ exports.verifyEmail = async (req, res) => {
       res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, EMAIL_EXCEPTIONS.VERIFIED_SUCCESS));
     }
   } catch (error) {
-    logger.error(error.message);
-    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+    errorHandling(error, res);
   }
 }
 
@@ -113,8 +111,7 @@ exports.loginUser = async (req, res) => {
     res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, "logged in successfully", user));
 
   } catch (error) {
-    logger.error(error.message);
-    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(sendResponse(false, error.message));
+    errorHandling(error, res);
   }
 }
 
@@ -142,8 +139,7 @@ exports.connectWithGoogle = async (req, res) => {
       res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, "Login With Google", data));
     }
   } catch (error) {
-    logger.error(error.message);
-    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+    errorHandling(error, res);
   }
 }
 
@@ -172,8 +168,7 @@ exports.connectWithApple = async (req, res) => {
     }
 
   } catch (error) {
-    logger.error(error.message);
-    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+    errorHandling(error, res);
   }
 }
 
@@ -199,7 +194,6 @@ exports.connectWithFacebook = async (req, res) => {
       res.status(STATUS_CODES.SUCCESS).send(sendResponse(true, "Login With Facebook", data));
     }
   } catch (error) {
-    logger.error(error.message);
-    res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).send(sendResponse(false, error.message));
+    errorHandling(error, res);
   }
 }
