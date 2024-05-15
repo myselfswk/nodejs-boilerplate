@@ -1,5 +1,5 @@
 # nodejs-boilerplate
- Nodejs Boilerplate project using expressJS, mongoose, Nodemailer, Nodemon, FCM Token multer & JSON web Token
+ Nodejs Boilerplate project using expressJS, mongoose, Nodemailer, Nodemon, FCM Token multer & JSON web Token (Payment and socket in future)
 
 **Backend:**
 
