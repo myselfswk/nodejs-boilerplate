@@ -1,4 +1,4 @@
-const { logger } = require('./logger');
+const logger = require('./logger');
 const { STATUS_CODES } = require('./constants');
 const { sendResponse } = require('./sendResponse');
 
