@@ -1,9 +1,12 @@
-const router = require('express').Router();
+import { Router } from 'express';
+const router = Router();
 
-const authRoutes = require('./authRoutes');
-const { AUTH_API_CONSTANTS } = require('../utils/constants');
+import authRoutes from './auth.routes.js';
 
-// All Auth Routes
-router.use(AUTH_API_CONSTANTS.AUTH, authRoutes);
+import { AUTH_API_CONSTANTS } from '../utils/constants.js';
+const { AUTH } = AUTH_API_CONSTANTS;
 
-module.exports = router;
+// All User Routes
+router.use(AUTH, authRoutes);
+
+export default router;

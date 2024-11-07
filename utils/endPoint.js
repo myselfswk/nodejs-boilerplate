@@ -1,7 +1,8 @@
-const { sendResponse } = require('./sendResponse');
-const { STATUS_CODES } = require('./constants');
+import { sendResponse } from './sendResponse.js';
+import { STATUS_CODES } from './constants.js';
 
 // Call if url is broken or invalid
-exports.endPoint = (req, res) => {
-    res.status(STATUS_CODES.NOT_FOUND).send(sendResponse(false, "Endpoint does not exist."));
+export const endPoint = (req, res) => {
+    const { NOT_FOUND } = STATUS_CODES;
+    res.status(NOT_FOUND).send(sendResponse(false, "Endpoint does not exist.", req?.originalUrl));
 }

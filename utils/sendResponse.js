@@ -1,5 +1,5 @@
 // Model for send response
-exports.sendResponse = (success, message, data) => {
+export const sendResponse = (success, message, data) => {
     if (data != null) {
         return { success: success, message: message, data: data };
     } else {

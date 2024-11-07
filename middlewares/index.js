@@ -1,10 +1,8 @@
-const { authenticateToken, isAdmin } = require('./authenticateToken');
-const { isValidObjectId } = require('./isValidObjectId');
-const { asyncHandler } = require('./asyncHandler');
+import { isValidObjectId } from './isValidObjectId.js';
+import { authenticateToken, isAdmin } from './authenticateToken.js';
 
-exports.middleWares = {
+export {
     authenticateToken,
     isAdmin,
-    isValidObjectId,
-    asyncHandler
+    isValidObjectId
 }
