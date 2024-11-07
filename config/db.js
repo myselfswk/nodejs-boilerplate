@@ -1,15 +1,17 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+import mongoose from 'mongoose';
+const { connect } = mongoose;
 
-const { DATABASE } = require('../utils/constants');
+import { logger } from '../utils/logger.js';
+import { DATABASE, MONGO_URI } from '../utils/constants.js';
 
-module.exports = () => {
-  mongoose.set("strictQuery", false);
+export default async () => {
+  const { SUCCESS, FAIL } = DATABASE;
 
   try {
-    mongoose.connect(process.env.MONGO_URI);
-    console.log(DATABASE.SUCCESS);
+    await connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 30000 });
+    console.log(SUCCESS);
   } catch (error) {
-    console.log(DATABASE.FAIL, error);
+    logger.error(error.message);
+    console.log(FAIL, error);
   }
 }
