@@ -19,8 +19,8 @@
 - The user can change the password by verifying the email using nodemailer
 
 ## 🚀 Upcoming Features
-- Socket & Stripe
+- Socket & Stripe (For Payment & Realtime interaction)
 
 ## Database Seed
 * The seed command will put admin in the database.
-* For more information, see code [here](seeders/adminSeeder.js)
+* For more information, see code [here](seeders/admin.seeder.js)
