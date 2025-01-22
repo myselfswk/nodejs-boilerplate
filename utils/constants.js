@@ -66,6 +66,7 @@ export const STATUS_CODES = Object.freeze({
     NOT_FOUND: 404,
     CONFLICT: 409,
     UNPROCESSABLE_ENTITY: 422,
+    TOO_MANY_REQUEST: 429,
     // Server Errors
     INTERNAL_SERVER_ERROR: 500,
     NOT_IMPLEMENTED: 501,
