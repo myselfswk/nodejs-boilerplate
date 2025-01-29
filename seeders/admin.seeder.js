@@ -1,6 +1,6 @@
 import User from '../models/user.model.js';
 import { ADMIN_FIELDS } from '../utils/constants.js';
-const { FULLNAME, DATEOFBIRTH, COUNTRY, EMAIL, PASSWORD, PHONENUMBER, VERIFIED, ROLE } = ADMIN_FIELDS;
+const { FULLNAME, USERNAME, ISVERIFIED, EMAIL, PASSWORD, ROLE } = ADMIN_FIELDS;
 
 export const seedAdmin = async () => {
     try {
@@ -11,12 +11,10 @@ export const seedAdmin = async () => {
             // Create admin credentials
             const adminCredentials = {
                 fullname: FULLNAME,
-                dateofbirth: DATEOFBIRTH,
-                country: COUNTRY,
+                username: USERNAME,
                 email: EMAIL,
-                phoneNumber: PHONENUMBER,
                 password: await User.hashPassword(PASSWORD),
-                verified: VERIFIED,
+                isverified: ISVERIFIED,
                 role: ROLE
             }
 

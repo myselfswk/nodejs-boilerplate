@@ -4,7 +4,7 @@ export const SERVICE = "gmail";
 export const EMAIL_PORT = 587;
 export const SECURE = false;
 export const USER = "appteam023@gmail.com";
-export const PASS = "eutzdyvezfyemsjv";
+export const PASS = "vqnsqmnkonzzpghs";
 export const MAX_PAGE_LENGTH = 2260;
 export const IV_LENGTH = 16;
 export const JWT_SECRET_KEY = 'my secret key';
@@ -13,7 +13,7 @@ export const ENCRYPTION_KEY = 'XwPp9xazJ0ku5CZnlmgAx2Dld8SHkAeT';
 
 export const BASE_URL = 'https://flutterapi.testdevlink.net/esmeralda/';
 export const BACKEND_URL = 'http://livinglegacy.testdevlink.net/';
-export const MONGO_URI = "mongodb+srv://appteam:appteam023@cluster0.3pcyibq.mongodb.net/esmeralda";
+export const MONGO_URI = "mongodb+srv://appteam:appteam023@cluster0.3pcyibq.mongodb.net/test";
 export const FCM_SERVER_KEY = "AAAAPgg9y80:APA91bH37QZnLwjiU4EiLaJAturIb6EZtZpbGtt-9pn2UhqBLLqGkw9jzgMPlnIQEXUPGIajF0SO1PDz8c5ZRgsmMnGlnRFiPJUNFH8PUSwMbmwcPuJ8FZhP6LidEIoP8DE5h971UPCe";
 
 // While Empty Fields
@@ -31,12 +31,10 @@ export const ROLES = Object.freeze({
 // Admin Fields for registering data
 export const ADMIN_FIELDS = Object.freeze({
     FULLNAME: "Admin",
-    DATEOFBIRTH: "1999-04-10T14:43:16.817+00:00",
-    COUNTRY: "NYC, USA",
+    USERNAME: "myadmin",
     EMAIL: "admin@admin.com",
-    PHONENUMBER: 123456789,
     PASSWORD: "Admin@#123",
-    VERIFIED: true,
+    ISVERIFIED: true,
     ROLE: ROLES.SUPER_ADMIN
 });
 

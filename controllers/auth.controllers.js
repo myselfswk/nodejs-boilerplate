@@ -95,7 +95,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     if (!(await user.isPasswordMatch(password))) return res.status(BAD_REQUEST).send(sendResponse(false, "Invalid Password"));
 
     let token = user.generateAuthToken();
-    if (!user.verified) {
+    if (!user.isverified) {
         const base = process.env.BASE_URL || BASE_URL;
         const url = `${base}users/${user.id}/verify/${token}`;
         const data = { url: url, name: user.fullname };

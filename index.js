@@ -50,44 +50,65 @@ app.use(secureHeader);
 app.use(conpressResponse);
 app.use(ipLimiter);
 
-app.use("/api", routes);
+app.use("/api", (req, res, next) => {
+    next();
+}, routes);
 
 app.get("/", (req, res) => res.send("Welcome to the Users API!"));
 app.route("*").get(endPoint).post(endPoint).put(endPoint).delete(endPoint);
 
-if (cluster.isPrimary) {
-    console.info(`Master ${process.pid} is running`);
+// if (cluster.isPrimary) {
+//     console.info(`Master ${process.pid} is running`);
 
-    // Fork workers.
-    for (let i = 0; i < numCPUs; i++) {
-        cluster.fork();
-    }
+//     // Fork workers.
+//     for (let i = 0; i < numCPUs; i++) {
+//         cluster.fork();
+//     }
 
-    cluster.on('exit', (worker, code, signal) => {
-        console.log(`Worker ${worker.process.pid} died. Forking a new worker...`);
-        cluster.fork();
+//     cluster.on('exit', (worker, code, signal) => {
+//         console.log(`Worker ${worker.process.pid} died. Forking a new worker...`);
+//         cluster.fork();
+//     });
+// } else {
+//     let server = http.createServer(corsOptions, app).listen(PORT, () => {
+//         console.info(`App is Running at PORT: ${PORT}, Worker ${process.pid} started`);
+//     });
+
+//     // Graceful Shutdown
+//     process.on("SIGINT", () => {
+//         console.info("Server shutting down...");
+//         server.close(() => {
+//             console.info("Server closed");
+//             process.exit(0);
+//         });
+//     });
+
+//     process.on("SIGTERM", () => {
+//         console.info("Server received SIGTERM");
+//         server.close(() => {
+//             console.info("Server closed");
+//             process.exit(0);
+//         });
+//     });
+// }
+
+let server = http.createServer(corsOptions, app).listen(PORT, () => {
+    console.info(`App is Running at PORT: ${PORT}, Worker ${process.pid} started`);
+});
+
+// Graceful Shutdown
+process.on("SIGINT", () => {
+    console.info("Server shutting down...");
+    server.close(() => {
+        console.info("Server closed");
+        process.exit(0);
     });
-} else {
-    let server = http.createServer(corsOptions, app).listen(PORT, () => {
-        console.info(`App is Running at PORT: ${PORT}, Worker ${process.pid} started`);
-    });
+});
 
-    // Graceful Shutdown
-    process.on("SIGINT", () => {
-        console.info("Server shutting down...");
-        server.close(() => {
-            console.info("Server closed");
-            process.exit(0);
-        });
+process.on("SIGTERM", () => {
+    console.info("Server received SIGTERM");
+    server.close(() => {
+        console.info("Server closed");
+        process.exit(0);
     });
-
-    process.on("SIGTERM", () => {
-        console.info("Server received SIGTERM");
-        server.close(() => {
-            console.info("Server closed");
-            process.exit(0);
-        });
-    });
-
-}
-// app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+});
